@@ -1,21 +1,15 @@
-// import React, { useState, useEffect } from "react";
-// // import { useHistory } from "react-router-dom";
-// import axios from "axios";
+import { Navbar } from "../components/homepage/Navbar";
+import { Card } from "../components/homepage/Card";
+
 export const HomePage: React.FC = () => {
-  // const [isEmailVerified, setIsEmailVerified] = useState(false);
-
-  // useEffect(() => {
-  //   const checkEmailVerificationStatus = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "http://localhost:8080/api/auth/email/verify"
-  //       );
-
-  //       console.log(response.data);
-  //     } catch (error) {}
-  //   };
-  //   checkEmailVerificationStatus();
-  // }, []);
-
-  return <div>Hello HomePage</div>;
+  return (
+    <div>
+      <Navbar>
+        <div></div>
+      </Navbar>
+      <Card>
+        <div></div>
+      </Card>
+    </div>
+  );
 };
