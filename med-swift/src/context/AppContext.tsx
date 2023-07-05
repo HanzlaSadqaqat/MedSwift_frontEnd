@@ -19,7 +19,7 @@ export let AppContextData = createContext<AppContextProps>({
 });
 
 const AppContext = (props: any) => {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [addProduct, setAddProduct] = useState(0);
 
