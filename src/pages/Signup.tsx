@@ -141,7 +141,7 @@ export const SignUp: React.FC = () => {
         <div className="relative top-5">
           Already have an account?
           <Link
-            to="/"
+            to="/login"
             className="text-secondary hover:text-primary font-semibold"
           >
             {" Login"}
