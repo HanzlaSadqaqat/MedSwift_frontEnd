@@ -8,10 +8,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SideBar } from "../components/Dashboard/SideBar";
-import { data } from "autoprefixer";
+import { useNavigate } from "react-router-dom";
 
 export const Medicine = () => {
   const [name, setName] = useState("");
@@ -22,28 +22,53 @@ export const Medicine = () => {
   const [quantity, setQuantity] = useState(0);
   const [doseInstruction, setDoseInstruction] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrl, setImage] = useState(null);
+  const [image, setImage] = useState<FileList | null>(null);
+
+  const navigate = useNavigate();
+
+  const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files);
+    if (e.target.files && e.target.files.length > 0) {
+      console.log(e.target.files);
+      setImage(e.target.files);
+    }
+  };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
-      const handleImageChange = () => {};
-      await axios.post("/medicine/upload", {
-        name,
-        weight,
-        expireDate,
-        availability,
-        price,
-        quantity,
-        doseInstruction,
-        description,
-        imageUrl,
-      });
-    } catch (error) {}
+      if (image) {
+        const formData = new FormData();
+
+        for (let i = 0; i < image.length; i++) {
+          formData.append("image", image[i]);
+        }
+        console.log(formData);
+
+        formData.append("name", name);
+        formData.append("weight", weight);
+        formData.append("expireDate", expireDate.toISOString());
+        formData.append("availability", availability.toString());
+        formData.append("price", price.toString());
+        formData.append("quantity", quantity.toString());
+        formData.append("dosageInstructions", doseInstruction);
+        formData.append("description", description);
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        };
+        console.log(image);
+
+        await axios.post("/medicine/upload", formData, config);
+      }
+      navigate("/");
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log(err.response?.data);
+    }
   };
-  // const createListing = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  // };
 
   return (
     <SideBar>
@@ -97,7 +122,10 @@ export const Medicine = () => {
 
               <div className="flex gap-20 items-center">
                 Availability
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  onChange={() => setAvailability(!availability)}
+                />
               </div>
               <div className="relative flex flex-col justify-between">
                 <input
@@ -105,7 +133,7 @@ export const Medicine = () => {
                   className="border-2 pl-10 w-72 border-black-300 p-1  max-w-3xl rounded"
                   placeholder="Price"
                   required
-                  onChange={() => setAvailability(!availability)}
+                  onChange={(e) => setPrice(parseInt(e.target.value))}
                 />
                 <FontAwesomeIcon
                   icon={faDollar}
@@ -164,6 +192,8 @@ export const Medicine = () => {
                   name="medicine_images"
                   id=""
                   accept="image/*"
+                  multiple
+                  onChange={handleUploadImage}
                 />
               </div>
             </div>
