@@ -44,7 +44,6 @@ export const Medicine = () => {
         for (let i = 0; i < image.length; i++) {
           formData.append("image", image[i]);
         }
-        console.log(formData);
 
         formData.append("name", name);
         formData.append("weight", weight);
