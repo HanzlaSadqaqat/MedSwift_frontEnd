@@ -68,22 +68,26 @@ export const SideBar: React.FC<sideProps> = (props: sideProps) => {
                 />
                 <div className={`${!open && "scale-0"}`}>Orders</div>
               </li>
-              <li className="pl-7 p-2 hover:bg-opacity-40 hover:bg-white flex gap-3 items-center cursor-pointer rounded-lg">
-                <FontAwesomeIcon
-                  icon={faBoxOpen}
-                  className={`h-7 relative  w-10 right-4`}
-                  onClick={() => setOpen(true)}
-                />
-                <div className={`${!open && "scale-0"}`}>Products</div>
-              </li>
-              <li className="pl-7 p-2 hover:bg-opacity-40 hover:bg-white flex gap-3 items-center cursor-pointer rounded-lg">
-                <FontAwesomeIcon
-                  icon={faBoxes}
-                  className={`h-7 relative w-10 right-4`}
-                  onClick={() => setOpen(true)}
-                />
-                <div className={`${!open && "hidden"}`}>Inventory</div>
-              </li>
+              <Link to="/products">
+                <li className="pl-7 p-2 hover:bg-opacity-40 hover:bg-white flex gap-3 items-center cursor-pointer rounded-lg">
+                  <FontAwesomeIcon
+                    icon={faBoxOpen}
+                    className={`h-7 relative  w-10 right-4`}
+                    onClick={() => setOpen(true)}
+                  />
+                  <div className={`${!open && "scale-0"}`}>Products</div>
+                </li>
+              </Link>
+              <Link to="/inventory">
+                <li className="pl-7 p-2 hover:bg-opacity-40 hover:bg-white flex gap-3 items-center cursor-pointer rounded-lg">
+                  <FontAwesomeIcon
+                    icon={faBoxes}
+                    className={`h-7 relative w-10 right-4`}
+                    onClick={() => setOpen(true)}
+                  />
+                  <div className={`${!open && "hidden"}`}>Inventory</div>
+                </li>
+              </Link>
               <Link to="/medicine">
                 <li className="pl-7 p-2 hover:bg-opacity-40 hover:bg-white flex gap-3 items-center cursor-pointer rounded-lg">
                   <FontAwesomeIcon

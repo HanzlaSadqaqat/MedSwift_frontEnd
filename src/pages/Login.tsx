@@ -9,11 +9,12 @@ import { AppContextData } from "../context/AppContext";
 
 // import { data } from "autoprefixer";
 export const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const { setLoggedIn } = useContext(AppContextData);
+  const { setLoggedIn, setEmail } = useContext(AppContextData);
   const [isError, setIsError] = useState("");
   const navigate = useNavigate();
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -21,8 +22,9 @@ export const Login: React.FC = () => {
         email: email,
         password: password,
       });
-      setLoggedIn!(true as boolean);
-      navigate("/");
+      setLoggedIn!(true);
+      setEmail!(email);
+      navigate(`/`);
     } catch (error) {
       const err = error as AxiosError;
       const message = err.response?.data;
@@ -50,7 +52,9 @@ export const Login: React.FC = () => {
                 placeholder="Email"
                 value={email}
                 required
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                autoComplete="email"
+                onChange={(e) => setEmailAddress(e.target.value)}
               />
               <FontAwesomeIcon
                 icon={faEnvelope}
